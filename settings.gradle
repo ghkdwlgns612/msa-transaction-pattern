@@ -1,0 +1,6 @@
+rootProject.name = 'transaction-pattern'
+
+include 'outbox-pattern'
+include 'outbox-pattern:order-service'
+include 'outbox-pattern:stock-service'
+include 'outbox-pattern:payment-service'
