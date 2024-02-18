@@ -1,6 +1,10 @@
 # Outbox pattern
 
-## 1. Install(zookeeper, kafka)
+## 1. Architecture
+
+![](../../Documents/커뮤니케이션자료사진/트랜잭션-outbox.jpg)
+
+## 2. Install(zookeeper, kafka)
 
 1. Download kafka
 
@@ -40,3 +44,4 @@ order-service(8080)
 stock-service(8081)
 payment-service(8082)
 ```
+
