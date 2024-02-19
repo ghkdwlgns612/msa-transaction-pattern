@@ -2,7 +2,7 @@
 
 ## 1. Architecture
 
-![](../../Documents/커뮤니케이션자료사진/트랜잭션-outbox.jpg)
+![](image/트랜잭션-outbox.jpg)
 
 ## 2. Install(zookeeper, kafka)
 
@@ -44,4 +44,21 @@ order-service(8080)
 stock-service(8081)
 payment-service(8082)
 ```
+
+## 3. Concern
+
+### 1. What if I succeeded in publishing on Payment Topic but failed to publishing on Stock Topic?
+
+answer: You need to roll back the message that went into the Payment Topic. And the data in the order_outbox table data should not be deleted.
+
+### 2. If multiple Springboot instances run a schedule, at some point two instances can send messages at the same time. What should I do in this case?
+
+answer1: Use the leader selection feature to modify only one instance to be scheduled.
+
+answer2: Add validation logic in the payment-service, stock-service, which conferences the published message.
+
+### 3. How do I guarantee publish producer message?
+
+answer: Record the storage time in the order_outbox table and publish it in order.
+
 
