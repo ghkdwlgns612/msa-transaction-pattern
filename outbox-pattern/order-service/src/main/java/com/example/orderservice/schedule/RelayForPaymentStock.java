@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Component
@@ -31,6 +32,7 @@ public class RelayForPaymentStock {
     public void relay() {
         List<Long> orderIds = orderOutboxRepository.findAll()
                 .stream()
+                .sorted(Comparator.comparing(OrderOutbox::getSavedAt))
                 .map(OrderOutbox::getOrderId)
                 .toList();
 

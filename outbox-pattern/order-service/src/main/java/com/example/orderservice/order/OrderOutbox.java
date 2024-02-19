@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Entity
 @Table(name = "order_outbox")
@@ -17,4 +19,7 @@ public class OrderOutbox {
     @Id
     @Column(name = "order_id")
     private long orderId;
+
+    @Column(name = "saved_at")
+    private LocalDateTime savedAt;
 }

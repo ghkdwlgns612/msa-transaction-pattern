@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -25,7 +27,7 @@ public class OrderService {
         );
 
         Order savedOrder = orderRepository.save(order);
-        orderOutboxRepository.save(new OrderOutbox(savedOrder.getId()));
+        orderOutboxRepository.save(new OrderOutbox(savedOrder.getId(), LocalDateTime.now()));
 
         return "주문 완료";
     }
