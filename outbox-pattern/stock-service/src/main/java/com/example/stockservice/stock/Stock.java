@@ -1,9 +1,11 @@
 package com.example.stockservice.stock;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "stock")
+@NoArgsConstructor
 public class Stock {
 
     @Id
@@ -14,4 +16,9 @@ public class Stock {
     private String itemName;
 
     private long stock;
+
+    public Stock(String itemName, long stock) {
+        this.itemName = itemName;
+        this.stock = stock;
+    }
 }
