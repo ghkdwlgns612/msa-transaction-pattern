@@ -1,4 +1,4 @@
-package com.example.orderservice.schedule.request;
+package com.example.ordertopayment;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

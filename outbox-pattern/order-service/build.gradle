@@ -1,4 +1,5 @@
 dependencies {
+    implementation project(':outbox-pattern:kafka-object')
     implementation project(':outbox-pattern:stock-service')
     implementation project(':outbox-pattern:payment-service')
 
