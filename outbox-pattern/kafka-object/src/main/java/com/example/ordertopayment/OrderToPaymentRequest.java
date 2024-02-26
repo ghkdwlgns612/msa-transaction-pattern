@@ -2,10 +2,14 @@ package com.example.ordertopayment;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@ToString
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class OrderToPaymentRequest {
-    private final String username;
-    private final long price;
+    private String username;
+    private long price;
 }

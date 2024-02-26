@@ -1,4 +1,4 @@
-package com.example.paymentservice.payment;
+package com.example.paymentservice.balance;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
@@ -20,5 +20,12 @@ public class Balance {
     public Balance(String userName, long balance) {
         this.userName = userName;
         this.balance = balance;
+    }
+
+    public void balance(long amount) {
+        if (balance < amount) {
+            throw new IllegalArgumentException("Balance is insufficient.");
+        }
+        this.balance -= amount;
     }
 }

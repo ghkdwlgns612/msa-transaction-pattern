@@ -2,10 +2,14 @@ package com.example.ordertostock;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@ToString
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class OrderToStockRequest {
-    private final String itemName;
-    private final long quantity;
+    private String itemName;
+    private long quantity;
 }

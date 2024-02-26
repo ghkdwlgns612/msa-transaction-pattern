@@ -1,7 +1,7 @@
 package com.example.paymentservice;
 
-import com.example.paymentservice.payment.Balance;
-import com.example.paymentservice.payment.BalanceRepository;
+import com.example.paymentservice.balance.Balance;
+import com.example.paymentservice.balance.BalanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

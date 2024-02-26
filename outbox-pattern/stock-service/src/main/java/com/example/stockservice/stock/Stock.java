@@ -21,4 +21,11 @@ public class Stock {
         this.itemName = itemName;
         this.stock = stock;
     }
+
+    public void adjustStock(long quantity) {
+        if (stock < quantity) {
+            throw new IllegalArgumentException();
+        }
+        this.stock -= quantity;
+    }
 }
