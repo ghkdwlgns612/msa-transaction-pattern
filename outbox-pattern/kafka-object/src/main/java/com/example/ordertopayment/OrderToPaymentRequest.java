@@ -10,6 +10,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderToPaymentRequest {
+    private long orderId;
     private String username;
     private long price;
 }

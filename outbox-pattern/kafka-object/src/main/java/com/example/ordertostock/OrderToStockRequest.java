@@ -10,6 +10,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderToStockRequest {
+    private long orderId;
     private String itemName;
     private long quantity;
 }
