@@ -61,4 +61,8 @@ answer2: Add validation logic in the payment-service, stock-service, which confe
 
 answer: Record the storage time in the order_outbox table and publish it in order.
 
+### 4. What if there is an exception in payment, stock service?
 
+answer1: Blocking strategy
+
+answer1: Non-Blocking strategy(DLQ)

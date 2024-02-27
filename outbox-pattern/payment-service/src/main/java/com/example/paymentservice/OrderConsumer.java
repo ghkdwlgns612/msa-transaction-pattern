@@ -6,7 +6,10 @@ import com.example.paymentservice.balance.BalanceRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +19,7 @@ public class OrderConsumer {
 
     private final BalanceRepository balanceRepository;
 
+    @RetryableTopic(attempts = "3", kafkaTemplate = "retryableTopicKafkaTemplate", backoff = @Backoff(value = 3000L))
     @KafkaListener(topics = "payment", containerFactory = "kafkaListenerContainer")
     public void listener(OrderToPaymentRequest request) {
         log.info("Data consuming: {}", request);
@@ -28,5 +32,10 @@ public class OrderConsumer {
 
         balance.balance(request.getPrice());
         balanceRepository.save(balance);
+    }
+
+    @DltHandler
+    public void handleDltPayment(OrderToPaymentRequest request) {
+        log.info("Error Data : {}", request.toString());
     }
 }

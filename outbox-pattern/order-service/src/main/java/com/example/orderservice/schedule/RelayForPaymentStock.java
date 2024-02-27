@@ -28,7 +28,7 @@ public class RelayForPaymentStock {
     private final OrderOutboxRepository orderOutboxRepository;
 
     @Transactional
-    @Scheduled(fixedRate = 10000L)
+    @Scheduled(fixedRate = 1000L)
     public void relay() {
         List<Long> orderIds = orderOutboxRepository.findAll()
                 .stream()
@@ -41,9 +41,9 @@ public class RelayForPaymentStock {
                     Order order = orderRepository.findById(orderId)
                             .orElseThrow(EntityNotFoundException::new);
                     OrderToPaymentRequest paymentRequest
-                            = new OrderToPaymentRequest(order.getUserName(), order.getPrice());
+                            = new OrderToPaymentRequest(orderId, order.getUserName(), order.getPrice());
                     OrderToStockRequest stockRequest
-                            = new OrderToStockRequest(order.getItemName(), order.getQuantity());
+                            = new OrderToStockRequest(orderId, order.getItemName(), order.getQuantity());
                     kafkaTemplate.executeInTransaction(operations -> {
                         operations.send(PAYMENT_TOPIC, paymentRequest);
                         operations.send(STOCK_TOPIC, stockRequest);
