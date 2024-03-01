@@ -1,5 +1,6 @@
 package com.example.orderservice.order;
 
+import com.example.orderservice.common.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,13 +21,14 @@ public class Order {
     @Column(name = "item_name")
     private String itemName;
 
-    private String status;
+    @Enumerated(value = EnumType.STRING)
+    private OrderStatus status;
 
     private long price;
 
     private long quantity;
 
-    private Order(String userName, String itemName, String status, long price, long quantity) {
+    private Order(String userName, String itemName, OrderStatus status, long price, long quantity) {
         this.userName = userName;
         this.itemName = itemName;
         this.status = status;
@@ -35,6 +37,18 @@ public class Order {
     }
 
     public static Order createOrder(String userName, String itemName, long price, long quantity) {
-        return new Order(userName, itemName, "IN_PROGRESS", price, quantity);
+        return new Order(userName, itemName, OrderStatus.IN_PROGRESS, price, quantity);
+    }
+
+    public void completed() {
+        this.status = OrderStatus.COMPLETED;
+    }
+
+    public void failOrder() {
+        this.status = OrderStatus.FAILED;
+    }
+
+    public boolean isOrdering() {
+        return this.status == OrderStatus.IN_PROGRESS;
     }
 }

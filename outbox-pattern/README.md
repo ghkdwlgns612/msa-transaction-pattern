@@ -23,7 +23,12 @@ bin/kafka-server-start.sh config/server.properties
 4. Create Topic
 ```
 bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic payment
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic payment.success
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic payment.fail
+
 bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic stock
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic stock.success
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic stock.fail
 
 // check topic
 bin/kafka-topics.sh --list --bootstrap-server localhost:9092
