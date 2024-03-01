@@ -40,17 +40,4 @@ public class KafkaOrderConsumerConfiguration {
         factory.setConsumerFactory(factory());
         return factory;
     }
-
-    @Bean
-    public ProducerFactory<String, OrderToStockRequest> producerFactory() {
-        Map<String, Object> config = new HashMap<>();
-        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
-        return new DefaultKafkaProducerFactory<>(
-                config, new StringSerializer(), new JsonSerializer<>());
-    }
-
-    @Bean
-    public KafkaTemplate<String, OrderToStockRequest> retryableTopicKafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
-    }
 }

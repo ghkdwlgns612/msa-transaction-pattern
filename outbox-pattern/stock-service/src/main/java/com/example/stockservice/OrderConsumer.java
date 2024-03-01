@@ -2,6 +2,8 @@ package com.example.stockservice;
 
 import com.example.ordertostock.OrderToStockRequest;
 import com.example.stockservice.stock.Stock;
+import com.example.stockservice.stock.StockOutbox;
+import com.example.stockservice.stock.StockOutboxRepository;
 import com.example.stockservice.stock.StockRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,9 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Component
 @Slf4j
@@ -18,8 +23,10 @@ import org.springframework.stereotype.Component;
 public class OrderConsumer {
 
     private final StockRepository stockRepository;
+    private final StockOutboxRepository stockOutboxRepository;
 
-    @RetryableTopic(attempts = "3", kafkaTemplate = "retryableTopicKafkaTemplate", backoff = @Backoff(value = 3000L))
+    @Transactional
+    @RetryableTopic(kafkaTemplate = "retryableTopicKafkaTemplate", backoff = @Backoff(value = 3000L))
     @KafkaListener(topics = "stock", containerFactory = "kafkaListenerContainer")
     public void listener(OrderToStockRequest request) {
         log.info("Data consuming: {}", request);
@@ -31,6 +38,7 @@ public class OrderConsumer {
 
         stock.adjustStock(request.getQuantity());
         stockRepository.save(stock);
+        stockOutboxRepository.save(new StockOutbox(request.getOrderId(), LocalDateTime.now()));
     }
 
     @DltHandler
