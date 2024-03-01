@@ -1,9 +1,9 @@
 package com.example.orderservice;
 
-import com.example.orderservice.order.Order;
-import com.example.orderservice.order.OrderOutbox;
-import com.example.orderservice.order.OrderOutboxRepository;
-import com.example.orderservice.order.OrderRepository;
+import com.example.orderservice.domain.Order;
+import com.example.orderservice.domain.OrderOutbox;
+import com.example.orderservice.domain.OrderOutboxRepository;
+import com.example.orderservice.domain.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

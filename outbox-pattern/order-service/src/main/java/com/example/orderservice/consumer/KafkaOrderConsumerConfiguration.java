@@ -1,4 +1,4 @@
-package com.example.paymentservice;
+package com.example.orderservice.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -20,10 +20,10 @@ public class KafkaOrderConsumerConfiguration {
     private String kafkaUrl;
 
     @Bean
-    public ConsumerFactory<String, Object> factory() {
+    public ConsumerFactory<String, Object> paymentFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "payment");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG, "payment_success");
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         config.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
@@ -32,9 +32,28 @@ public class KafkaOrderConsumerConfiguration {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainer() {
+    public ConcurrentKafkaListenerContainerFactory<String, Object> paymentListenerContainer() {
         ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(factory());
+        factory.setConsumerFactory(paymentFactory());
+        return factory;
+    }
+
+    @Bean
+    public ConsumerFactory<String, Object> stockFactory() {
+        Map<String, Object> config = new HashMap<>();
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
+        config.put(ConsumerConfig.GROUP_ID_CONFIG, "stock_success");
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        config.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+
+        return new DefaultKafkaConsumerFactory<>(config);
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, Object> stockListenerContainer() {
+        ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(paymentFactory());
         return factory;
     }
 }

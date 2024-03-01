@@ -1,4 +1,4 @@
-package com.example.stockservice;
+package com.example.stockservice.consumer;
 
 import com.example.ordertostock.OrderToStockRequest;
 import com.example.stockservice.stock.Stock;

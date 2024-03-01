@@ -1,9 +1,9 @@
 package com.example.orderservice.schedule;
 
-import com.example.orderservice.order.Order;
-import com.example.orderservice.order.OrderOutbox;
-import com.example.orderservice.order.OrderOutboxRepository;
-import com.example.orderservice.order.OrderRepository;
+import com.example.orderservice.domain.Order;
+import com.example.orderservice.domain.OrderOutbox;
+import com.example.orderservice.domain.OrderOutboxRepository;
+import com.example.orderservice.domain.OrderRepository;
 import com.example.ordertopayment.OrderToPaymentRequest;
 import com.example.ordertostock.OrderToStockRequest;
 import jakarta.persistence.EntityNotFoundException;

@@ -1,6 +1,5 @@
-package com.example.orderservice.order;
+package com.example.orderservice.domain;
 
-import com.example.orderservice.common.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

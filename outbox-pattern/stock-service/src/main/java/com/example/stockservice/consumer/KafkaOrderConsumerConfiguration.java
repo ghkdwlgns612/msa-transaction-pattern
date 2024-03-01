@@ -1,4 +1,4 @@
-package com.example.stockservice;
+package com.example.stockservice.consumer;
 
 import com.example.ordertostock.OrderToStockRequest;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

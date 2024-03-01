@@ -1,8 +1,8 @@
-package com.example.orderservice;
+package com.example.orderservice.consumer;
 
 import com.example.ordercommon.OrderSuccessResponse;
-import com.example.orderservice.order.Order;
-import com.example.orderservice.order.OrderRepository;
+import com.example.orderservice.domain.Order;
+import com.example.orderservice.domain.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

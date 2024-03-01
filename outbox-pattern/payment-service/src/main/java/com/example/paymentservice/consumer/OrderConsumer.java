@@ -1,4 +1,4 @@
-package com.example.paymentservice;
+package com.example.paymentservice.consumer;
 
 import com.example.ordertopayment.OrderToPaymentRequest;
 import com.example.paymentservice.balance.Balance;

@@ -1,4 +1,4 @@
-package com.example.paymentservice;
+package com.example.orderservice.producer;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -20,7 +20,9 @@ public class KafkaOrderProducerConfiguration {
 
     @Bean
     public KafkaTemplate<String, Object> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+        DefaultKafkaProducerFactory<String, Object> factory = producerFactory();
+        factory.setTransactionIdPrefix("transactionIdPrefix");
+        return new KafkaTemplate<>(factory);
     }
 
     @Bean
