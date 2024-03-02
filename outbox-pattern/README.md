@@ -2,7 +2,11 @@
 
 ## 1. Architecture
 
-![](image/트랜잭션-outbox.jpg)
+![](image/transaction-outbox.jpg)
+
+### 1-1. Transaction
+
+![](image/trasaction-compensation.jpg)
 
 ## 2. Install(zookeeper, kafka)
 
@@ -24,11 +28,13 @@ bin/kafka-server-start.sh config/server.properties
 ```
 bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic payment
 bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic payment.success
-bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic payment.fail
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic payment.dlt
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic payment.compensation
 
 bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic stock
 bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic stock.success
-bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic stock.fail
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic stock.dlt
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic stock.compensation
 
 // check topic
 bin/kafka-topics.sh --list --bootstrap-server localhost:9092
@@ -54,13 +60,13 @@ payment-service(8082)
 
 ### 1. What if I succeeded in publishing on Payment Topic but failed to publishing on Stock Topic?
 
-answer: You need to roll back the message that went into the Payment Topic. And the data in the order_outbox table data should not be deleted.
+answer: You need to roll back the message that went into the Payment Topic. And the data in the order_outbox table data should not be deleted. So I used "kafkaTemplate.executeInTransaction".
 
 ### 2. If multiple Springboot instances run a schedule, at some point two instances can send messages at the same time. What should I do in this case?
 
 answer1: Use the leader selection feature to modify only one instance to be scheduled.
 
-answer2: Add validation logic in the payment-service, stock-service, which conferences the published message.
+answer2: Add validation logic in the consumer(payment-service, stock-service), which conferences the published message.
 
 ### 3. How do I guarantee publish producer message?
 
@@ -71,3 +77,8 @@ answer: Record the storage time in the order_outbox table and publish it in orde
 answer1: Blocking strategy
 
 answer1: Non-Blocking strategy(DLQ)
+
+#### 4-1. What actions should I take in Order Service?
+
+answer: Send a compensation request to StockService.
+
