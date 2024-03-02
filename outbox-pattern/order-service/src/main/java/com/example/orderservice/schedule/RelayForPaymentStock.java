@@ -47,7 +47,9 @@ public class RelayForPaymentStock {
                     kafkaTemplate.executeInTransaction(operations -> {
                         operations.send(PAYMENT_TOPIC, paymentRequest);
                         operations.send(STOCK_TOPIC, stockRequest);
+                        order.linkOtherServices();
                         orderOutboxRepository.deleteById(order.getId());
+                        orderRepository.save(order);
                         return true;
                     });
                 });
