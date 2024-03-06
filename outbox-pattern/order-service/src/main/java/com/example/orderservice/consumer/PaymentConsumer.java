@@ -1,11 +1,11 @@
 package com.example.orderservice.consumer;
 
-import com.example.ordercommon.OrderSuccessResponse;
+import com.example.dto.ordercommon.OrderSuccessResponse;
 import com.example.orderservice.domain.Order;
 import com.example.orderservice.domain.OrderRepository;
-import com.example.ordertopayment.OrderToPaymentRequest;
-import com.example.ordertopayment.PaymentCompensationRequest;
-import com.example.ordertostock.StockCompensationRequest;
+import com.example.dto.ordertopayment.OrderToPaymentRequest;
+import com.example.dto.ordertopayment.PaymentCompensationRequest;
+import com.example.dto.ordertostock.StockCompensationRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

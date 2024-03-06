@@ -1,6 +1,6 @@
 package com.example.paymentservice.consumer;
 
-import com.example.ordertopayment.PaymentCompensationRequest;
+import com.example.dto.ordertopayment.PaymentCompensationRequest;
 import com.example.paymentservice.balance.Balance;
 import com.example.paymentservice.balance.BalanceRepository;
 import jakarta.persistence.EntityNotFoundException;

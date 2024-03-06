@@ -1,7 +1,6 @@
 package com.example.stockservice.consumer;
 
-import com.example.ordertopayment.PaymentCompensationRequest;
-import com.example.ordertostock.StockCompensationRequest;
+import com.example.dto.ordertostock.StockCompensationRequest;
 import com.example.stockservice.stock.Stock;
 import com.example.stockservice.stock.StockRepository;
 import jakarta.persistence.EntityNotFoundException;

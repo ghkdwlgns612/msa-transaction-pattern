@@ -1,4 +1,4 @@
-package com.example.ordertostock;
+package com.example.dto.ordertopayment;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,8 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StockCompensationRequest {
-    private String itemName;
-    private long quantity;
+public class OrderToPaymentRequest {
+    private long orderId;
+    private String username;
+    private long price;
 }

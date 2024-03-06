@@ -1,6 +1,6 @@
 package com.example.paymentservice.consumer;
 
-import com.example.ordertopayment.OrderToPaymentRequest;
+import com.example.dto.ordertopayment.OrderToPaymentRequest;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
 package com.example.stockservice.consumer;
 
-import com.example.ordertostock.OrderToStockRequest;
+import com.example.dto.ordertostock.OrderToStockRequest;
 import com.example.stockservice.stock.Stock;
 import com.example.stockservice.stock.StockOutbox;
 import com.example.stockservice.stock.StockOutboxRepository;

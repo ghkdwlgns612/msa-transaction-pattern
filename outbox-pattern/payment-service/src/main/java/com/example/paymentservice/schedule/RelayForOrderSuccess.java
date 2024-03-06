@@ -1,6 +1,6 @@
 package com.example.paymentservice.schedule;
 
-import com.example.ordercommon.OrderSuccessResponse;
+import com.example.dto.ordercommon.OrderSuccessResponse;
 import com.example.paymentservice.balance.BalanceOutbox;
 import com.example.paymentservice.balance.BalanceOutboxRepository;
 import lombok.RequiredArgsConstructor;

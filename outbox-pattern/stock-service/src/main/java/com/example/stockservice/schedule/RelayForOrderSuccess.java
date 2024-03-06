@@ -1,6 +1,6 @@
 package com.example.stockservice.schedule;
 
-import com.example.ordercommon.OrderSuccessResponse;
+import com.example.dto.ordercommon.OrderSuccessResponse;
 import com.example.stockservice.stock.StockOutbox;
 import com.example.stockservice.stock.StockOutboxRepository;
 import lombok.RequiredArgsConstructor;
