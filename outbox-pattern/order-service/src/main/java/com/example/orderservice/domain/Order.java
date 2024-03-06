@@ -101,6 +101,10 @@ public class Order {
         return this.stockStatus == StockStatus.COMPLETED;
     }
 
+    public boolean isPaymentSucceeded() {
+        return this.paymentStatus == PaymentStatus.COMPLETED;
+    }
+
     public boolean isFailed() {
         return this.orderStatus == OrderStatus.FAILED;
     }

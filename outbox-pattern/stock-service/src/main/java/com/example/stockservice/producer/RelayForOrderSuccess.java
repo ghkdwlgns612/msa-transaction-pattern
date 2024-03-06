@@ -1,5 +1,6 @@
-package com.example.stockservice.schedule;
+package com.example.stockservice.producer;
 
+import com.example.KafkaConstants;
 import com.example.dto.ordercommon.OrderSuccessResponse;
 import com.example.stockservice.stock.StockOutbox;
 import com.example.stockservice.stock.StockOutboxRepository;
@@ -16,10 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RelayForOrderSuccess {
 
-    private static final String STOCK_SUCCESS_TOPIC = "stock.success";
-
     private final StockOutboxRepository stockOutboxRepository;
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, OrderSuccessResponse> kafkaTemplate;
 
     @Transactional
     @Scheduled(fixedRate = 1000L)
@@ -32,7 +31,8 @@ public class RelayForOrderSuccess {
 
         succeededOrderIds
                 .forEach(succeededOrderId -> {
-                            kafkaTemplate.send(STOCK_SUCCESS_TOPIC, new OrderSuccessResponse(succeededOrderId));
+                            kafkaTemplate.send(KafkaConstants.STOCK_SUCCESS_TOPIC_NAME,
+                                    new OrderSuccessResponse(succeededOrderId));
                             stockOutboxRepository.deleteById(succeededOrderId);
                         }
                 );

@@ -1,11 +1,11 @@
-package com.example.orderservice.schedule;
+package com.example.orderservice.producer;
 
+import com.example.dto.ordertopayment.OrderToPaymentRequest;
+import com.example.dto.ordertostock.OrderToStockRequest;
 import com.example.orderservice.domain.Order;
 import com.example.orderservice.domain.OrderOutbox;
 import com.example.orderservice.domain.OrderOutboxRepository;
 import com.example.orderservice.domain.OrderRepository;
-import com.example.dto.ordertopayment.OrderToPaymentRequest;
-import com.example.dto.ordertostock.OrderToStockRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -16,12 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.example.KafkaConstants.PAYMENT_TOPIC_NAME;
+import static com.example.KafkaConstants.STOCK_TOPIC_NAME;
+
 @Component
 @RequiredArgsConstructor
 public class RelayForPaymentStock {
-
-    private static final String PAYMENT_TOPIC = "payment";
-    private static final String STOCK_TOPIC = "stock";
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final OrderRepository orderRepository;
@@ -45,8 +45,8 @@ public class RelayForPaymentStock {
                     OrderToStockRequest stockRequest
                             = new OrderToStockRequest(orderId, order.getItemName(), order.getQuantity());
                     kafkaTemplate.executeInTransaction(operations -> {
-                        operations.send(PAYMENT_TOPIC, paymentRequest);
-                        operations.send(STOCK_TOPIC, stockRequest);
+                        operations.send(PAYMENT_TOPIC_NAME, paymentRequest);
+                        operations.send(STOCK_TOPIC_NAME, stockRequest);
                         order.linkOtherServices();
                         orderOutboxRepository.deleteById(order.getId());
                         orderRepository.save(order);

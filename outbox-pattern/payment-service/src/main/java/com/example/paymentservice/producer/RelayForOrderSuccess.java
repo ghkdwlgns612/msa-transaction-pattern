@@ -1,4 +1,4 @@
-package com.example.paymentservice.schedule;
+package com.example.paymentservice.producer;
 
 import com.example.dto.ordercommon.OrderSuccessResponse;
 import com.example.paymentservice.balance.BalanceOutbox;
@@ -12,11 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.example.KafkaConstants.PAYMENT_SUCCESS_TOPIC_NAME;
+
 @Component
 @RequiredArgsConstructor
 public class RelayForOrderSuccess {
-
-    private static final String PAYMENT_SUCCESS_TOPIC = "payment.success";
 
     private final BalanceOutboxRepository balanceOutboxRepository;
     private final KafkaTemplate<String, Object> kafkaTemplate;
@@ -32,7 +32,7 @@ public class RelayForOrderSuccess {
 
         succeededOrderIds
                 .forEach(succeededOrderId -> {
-                            kafkaTemplate.send(PAYMENT_SUCCESS_TOPIC, new OrderSuccessResponse(succeededOrderId));
+                            kafkaTemplate.send(PAYMENT_SUCCESS_TOPIC_NAME, new OrderSuccessResponse(succeededOrderId));
                             balanceOutboxRepository.deleteById(succeededOrderId);
                         }
                 );

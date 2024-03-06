@@ -16,6 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import static com.example.KafkaConstants.PAYMENT_CONSUMER_CONTAINER_NAME;
+import static com.example.KafkaConstants.PAYMENT_DLQ_TEMPLATE_NAME;
+import static com.example.KafkaConstants.PAYMENT_TOPIC_NAME;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -26,11 +30,11 @@ public class OrderConsumer {
 
     @Transactional
     @RetryableTopic(
-            kafkaTemplate = "retryableTopicKafkaTemplate",
+            kafkaTemplate = PAYMENT_DLQ_TEMPLATE_NAME,
             backoff = @Backoff(value = 2000L),
             dltTopicSuffix = ".dlt"
     )
-    @KafkaListener(topics = "payment", containerFactory = "kafkaListenerContainer")
+    @KafkaListener(topics = PAYMENT_TOPIC_NAME, containerFactory = PAYMENT_CONSUMER_CONTAINER_NAME)
     public void listener(OrderToPaymentRequest request) {
         log.info("Data consuming: {}", request);
         if (request == null) {

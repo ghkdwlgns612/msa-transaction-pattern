@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import java.util.List;
 
 @EnableScheduling
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.example")
 @RequiredArgsConstructor
 public class StockServiceApplication implements CommandLineRunner {
 

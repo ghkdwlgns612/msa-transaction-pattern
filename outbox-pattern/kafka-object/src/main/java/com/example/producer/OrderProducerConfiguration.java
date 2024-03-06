@@ -1,8 +1,9 @@
-package com.example.paymentservice.producer;
+package com.example.producer;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -13,14 +14,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaOrderProducerConfiguration {
+@ConditionalOnProperty(value = "kafka.configuration.order", havingValue = "true")
+public class OrderProducerConfiguration {
 
     @Value("${kafka.server.url}")
     private String kafkaUrl;
 
     @Bean
     public KafkaTemplate<String, Object> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+        DefaultKafkaProducerFactory<String, Object> factory = producerFactory();
+        factory.setTransactionIdPrefix("transactionIdPrefix");
+        return new KafkaTemplate<>(factory);
     }
 
     @Bean

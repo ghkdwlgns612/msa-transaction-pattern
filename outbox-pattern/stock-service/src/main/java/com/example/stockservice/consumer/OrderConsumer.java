@@ -1,5 +1,6 @@
 package com.example.stockservice.consumer;
 
+import com.example.KafkaConstants;
 import com.example.dto.ordertostock.OrderToStockRequest;
 import com.example.stockservice.stock.Stock;
 import com.example.stockservice.stock.StockOutbox;
@@ -16,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import static com.example.KafkaConstants.STOCK_CONSUMER_CONTAINER_NAME;
+import static com.example.KafkaConstants.STOCK_TOPIC_NAME;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -26,11 +30,11 @@ public class OrderConsumer {
 
     @Transactional
     @RetryableTopic(
-            kafkaTemplate = "retryableTopicKafkaTemplate",
+            kafkaTemplate = KafkaConstants.STOCK_DLQ_TEMPLATE_NAME,
             backoff = @Backoff(value = 2000L),
             dltTopicSuffix = ".dlt"
     )
-    @KafkaListener(topics = "stock", containerFactory = "kafkaListenerContainer")
+    @KafkaListener(topics = STOCK_TOPIC_NAME, containerFactory = STOCK_CONSUMER_CONTAINER_NAME)
     public void listener(OrderToStockRequest request) {
         log.info("Data consuming: {}", request);
         if (request == null) {

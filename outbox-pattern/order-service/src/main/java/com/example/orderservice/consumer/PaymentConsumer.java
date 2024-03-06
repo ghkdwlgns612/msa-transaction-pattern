@@ -1,5 +1,6 @@
 package com.example.orderservice.consumer;
 
+import com.example.KafkaConstants;
 import com.example.dto.ordercommon.OrderSuccessResponse;
 import com.example.orderservice.domain.Order;
 import com.example.orderservice.domain.OrderRepository;
@@ -14,19 +15,18 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.example.KafkaConstants.*;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class PaymentConsumer {
 
-    private static final String PAYMENT_COMPENSATION_TOPIC = "payment.compensation";
-    private static final String STOCK_COMPENSATION_TOPIC = "stock.compensation";
-
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final OrderRepository orderRepository;
 
     @Transactional
-    @KafkaListener(topics = "payment.success", containerFactory = "paymentListenerContainer")
+    @KafkaListener(topics = PAYMENT_SUCCESS_TOPIC_NAME, containerFactory = ORDER_PAYMENT_CONSUMER_CONTAINER_NAME)
     public void listenSuccess(OrderSuccessResponse response) {
         log.info("Succeeded Data consuming: {}", response);
         if (response == null) {
@@ -40,7 +40,7 @@ public class PaymentConsumer {
         // self compensation
         if (order.isFailed()) {
             kafkaTemplate.send(
-                    PAYMENT_COMPENSATION_TOPIC,
+                    PAYMENT_COMPENSATION_TOPIC_NAME,
                     new PaymentCompensationRequest(order.getUserName(), order.getPrice()));
             orderRepository.save(order);
             return;
@@ -53,7 +53,7 @@ public class PaymentConsumer {
     }
 
     @Transactional
-    @KafkaListener(topics = "payment.dlt", containerFactory = "paymentListenerContainer")
+    @KafkaListener(topics = PAYMENT_DLQ_TOPIC_NAME, containerFactory = ORDER_PAYMENT_CONSUMER_CONTAINER_NAME)
     public void listenFail(OrderToPaymentRequest request) {
         log.info("Failed Data consuming: {}", request);
         if (request == null) {
@@ -67,7 +67,7 @@ public class PaymentConsumer {
 
         if (order.isStockSucceeded()) {
             kafkaTemplate.send(
-                    STOCK_COMPENSATION_TOPIC,
+                    STOCK_COMPENSATION_TOPIC_NAME,
                     new StockCompensationRequest(order.getItemName(), order.getQuantity()));
         }
     }
