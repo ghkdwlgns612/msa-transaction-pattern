@@ -1,4 +1,4 @@
-# Outbox pattern
+# Outbox pattern + Saga pattern(Choreography)
 
 ## 1. Architecture
 
@@ -82,3 +82,11 @@ answer1: Non-Blocking strategy(DLQ)
 
 answer: Send a compensation request to StockService.
 
+### 5. Compensation transactions based on each service status
+
+|order-service|payment-service|stock-service|compensation|
+|------|---|---|---|
+|FAILED|FAILED|SUCCESS|stock compensation|
+|FAILED|SUCCESS|FAILED|payment compensation|
+|FAILED|FAILED|FAILED|X|
+|SUCCESS|SUCCESS|SUCCESS|X|
