@@ -87,6 +87,10 @@ answer: Send a compensation request to StockService.
 |order-service|payment-service|stock-service|compensation|
 |------|---|---|---|
 |FAILED|FAILED|SUCCESS|stock compensation|
+|FAILED|FAILED|IN_PROGRESS -> SUCCESS|self compensation(stock)|
+|FAILED|FAILED|IN_PROGRESS -> FAILED|X|
 |FAILED|SUCCESS|FAILED|payment compensation|
+|FAILED|IN_PROGRESS -> FAILED|FAILED|X|
+|FAILED|IN_PROGRESS -> SUCCESS|FAILED|self compensation(payment)|
 |FAILED|FAILED|FAILED|X|
 |SUCCESS|SUCCESS|SUCCESS|X|
