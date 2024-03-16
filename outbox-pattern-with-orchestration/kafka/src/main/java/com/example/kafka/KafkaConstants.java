@@ -8,6 +8,11 @@ public class KafkaConstants {
     // orchestrator
     public static final String ORCHESTRATOR_TOPIC_NAME = "orchestrator";
     public static final String ORCHESTRATOR_ORDER_RESPONSE_TOPIC_NAME = "orchestrator.response";
+    public static final String ORCHESTRATOR_ORDER_CONSUMER_CONTAINER_NAME = "orchestratorOrderContainer";
+    public static final String ORCHESTRATOR_PAYMENT_SUCCESS_CONSUMER_CONTAINER_NAME = "orchestratorPaymentSuccessContainer";
+    public static final String ORCHESTRATOR_PAYMENT_FAIL_CONSUMER_CONTAINER_NAME = "orchestratorPaymentFailContainer";
+    public static final String ORCHESTRATOR_STOCK_SUCCESS_CONSUMER_CONTAINER_NAME = "orchestratorStockSuccessContainer";
+    public static final String ORCHESTRATOR_STOCK_FAIL_CONSUMER_CONTAINER_NAME = "orchestratorStockFailContainer";
 
     // payment
     public static final String PAYMENT_TOPIC_NAME = "payment";
