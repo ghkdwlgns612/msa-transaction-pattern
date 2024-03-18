@@ -2,11 +2,7 @@
 
 ## 1. Architecture
 
-![](image/transaction-outbox.jpg)
-
-### 1-1. Transaction
-
-![](image/trasaction-compensation.jpg)
+![](image/outbox.png)
 
 ## 2. Install(zookeeper, kafka)
 
