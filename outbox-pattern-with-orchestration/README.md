@@ -60,6 +60,11 @@ stock-service(8083)
 
 ## 3. Concern
 
-### 1. outbox pattern 을 써야하는 경우는 어떤 경우인가요??
+### 1. In what cases should I use the outbox pattern?
 
-answer: 즉각적인 반응이 아닌 주기적으로 실행해도 되는 로직. 예를 들면 compensation 을 가정해보자. payment 에 대한 compensation 은 2가지 인 경우 실행된다. stock 이 실패했을 경우, payment 가 성공했는데 stock 이 실패했을 경우이다. 이런 경우 outbox pattern 사용 시 중복되는 compensation 요청이 나갈 수 있어 이런 경우는 outbox pattern 을 사용해서는 안된다. 
+answer: Logic to run periodically rather than immediately responding. For example, suppose Compensation. Compensation for Payment is executed in two cases.
+
+1. payment-service(success) -> stock-service(fail) --> payment compensation.
+2. stock-service(fail) -> payment-service(success) --> payment compensation.
+
+A duplicate message may be issued instantaneously according to a stock-service failure time point.
