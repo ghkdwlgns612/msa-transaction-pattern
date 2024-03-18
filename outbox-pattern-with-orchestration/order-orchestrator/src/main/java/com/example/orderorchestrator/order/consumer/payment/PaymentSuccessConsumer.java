@@ -35,7 +35,6 @@ public class PaymentSuccessConsumer {
 
         order.successPayment();
         if (order.isSucceedStock()) {
-            log.info("Send success data to order-service: {}", order);
             kafkaTemplate.send(
                     KafkaConstants.ORCHESTRATOR_ORDER_RESPONSE_TOPIC_NAME,
                     new OrderResultResponse(order.getOrderId(), true));

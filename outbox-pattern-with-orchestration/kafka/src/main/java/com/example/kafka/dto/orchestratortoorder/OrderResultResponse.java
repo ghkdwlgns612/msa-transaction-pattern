@@ -11,5 +11,5 @@ import lombok.ToString;
 @NoArgsConstructor
 public class OrderResultResponse {
     private long orderId;
-    private boolean isSucceed;
+    private boolean succeed;
 }
