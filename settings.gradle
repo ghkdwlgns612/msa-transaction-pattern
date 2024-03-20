@@ -12,3 +12,7 @@ include 'outbox-pattern-with-orchestration:order-orchestrator'
 include 'outbox-pattern-with-orchestration:order-service'
 include 'outbox-pattern-with-orchestration:payment-service'
 include 'outbox-pattern-with-orchestration:stock-service'
+
+include 'seata-saga-pattern'
+include 'seata-saga-pattern:order-service'
+include 'seata-saga-pattern:payment-service'
